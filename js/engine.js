@@ -13,16 +13,16 @@
  * writing app.js a little simpler to work with.
  */
 
-var Engine = (function(global) {
+const Engine = ( global => {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
-    var doc = global.document,
+    const doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
-        ctx = canvas.getContext('2d'),
-        lastTime;
+        ctx = canvas.getContext('2d');
+    let lastTime;
 
     canvas.width = 505;
     canvas.height = 606;
@@ -38,7 +38,7 @@ var Engine = (function(global) {
          * would be the same for everyone (regardless of how fast their
          * computer is) - hurray time!
          */
-        var now = Date.now(),
+        const now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
         /* Call our update/render functions, pass along the time delta to
@@ -91,9 +91,7 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
-        allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
-        });
+        allEnemies.forEach(enemy => enemy.update(dt));
         player.update();
     }
 
@@ -107,7 +105,7 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        var rowImages = [
+        const rowImages = [
                 'images/water-block.png',   // Top row is water
                 'images/stone-block.png',   // Row 1 of 3 of stone
                 'images/stone-block.png',   // Row 2 of 3 of stone
@@ -116,8 +114,8 @@ var Engine = (function(global) {
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 6,
-            numCols = 5,
-            row, col;
+            numCols = 5;
+        let row, col;
         
         // Before drawing, clear existing canvas
         ctx.clearRect(0,0,canvas.width,canvas.height)
@@ -150,10 +148,7 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
-        });
-
+        allEnemies.forEach( enemy => enemy.render());
         player.render();
     }
 

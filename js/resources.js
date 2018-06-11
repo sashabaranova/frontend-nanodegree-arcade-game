@@ -4,10 +4,10 @@
  * a simple "caching" layer so it will reuse cached images if you attempt
  * to load the same image multiple times.
  */
-(function() {
-    var resourceCache = {};
-    var loading = [];
-    var readyCallbacks = [];
+(() => {
+    let resourceCache = {};
+    let loading = [];
+    let readyCallbacks = [];
 
     /* This is the publicly accessible image loading function. It accepts
      * an array of strings pointing to image files or a string for a single
@@ -19,9 +19,7 @@
              * loop through each value and call our image
              * loader on that image file
              */
-            urlOrArr.forEach(function(url) {
-                _load(url);
-            });
+            urlOrArr.forEach(url => _load(url));
         } else {
             /* The developer did not pass an array to this function,
              * assume the value is a string and call our image loader
@@ -45,7 +43,7 @@
             /* This URL has not been previously loaded and is not present
              * within our cache; we'll need to load this image.
              */
-            var img = new Image();
+            const img = new Image();
             img.onload = function() {
                 /* Once our image has properly loaded, add it to our cache
                  * so that we can simply return this image if the developer
@@ -57,7 +55,7 @@
                  * call all of the onReady() callbacks we have defined.
                  */
                 if(isReady()) {
-                    readyCallbacks.forEach(function(func) { func(); });
+                    readyCallbacks.forEach(func => func());
                 }
             };
 
@@ -82,8 +80,8 @@
      * for loading have in fact been properly loaded.
      */
     function isReady() {
-        var ready = true;
-        for(var k in resourceCache) {
+        let ready = true;
+        for(let k in resourceCache) {
             if(resourceCache.hasOwnProperty(k) &&
                !resourceCache[k]) {
                 ready = false;
