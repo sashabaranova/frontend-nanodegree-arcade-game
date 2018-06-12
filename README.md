@@ -1,6 +1,28 @@
-frontend-nanodegree-arcade-game
-===============================
+# frontend-nanodegree-arcade-game
+Classic arcade game recreated for my FEND project
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## Description
+Simple app for PC built using object-oriented programming and HTML canvas. 
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+The aim of the player is to reach water without hitting the enemies - bugs!
+Use respective arrow keys to move the player up, down, to the left and to the right.
+
+If the player and bug's paths cross, the player will return to his/her initial position.
+
+If the player reaches the water, the gameboard is cleared off the bugs.
+The game will then restart, the player will return to the initial position and new enemies will be generated.
+
+Yes, it's a pretty infinite game so far:)
+
+## How to run 
+
+You can either download or clone the repository:
+
+1. Press the green 'Clone or download' button in the right corner
+
+2. Press 'Download ZIP' or copy the link and go ahead with git clone
+
+3. Navigate into the folder and open index.html file
+
+4. Play:)
+

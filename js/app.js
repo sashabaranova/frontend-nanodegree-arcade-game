@@ -3,6 +3,7 @@ class Enemy {
 	constructor(x, y) {
 	    this.x = x;
 	    this.y = y;
+	    // initial speed is randomized for each enemy instance
 	    this.speed = 120 + Math.floor(Math.random() * 200);
 	    // The image/sprite for our enemies, this uses
 	    // a helper we've provided to easily load images
@@ -38,22 +39,22 @@ const initCellY = 5;
 const track1 = cellHeight - cellHeight / 4;
 const track2 = cellHeight * 2 - cellHeight / 4;
 const track3 = cellHeight * 3 - cellHeight / 4;
+// a const that is needed for player's position adjuctment
+const diff = 20; 
 
 // this function transforms pixel coordinates into cell numbers
 function pixToCell(x, y) {
 	let cellX = Math.floor(x / cellWidth);
 	let cellY = Math.floor(y / cellHeight);
 	return [cellX, cellY];
-};
+}
 
 // this function transforms cell numbers into pixel coordinates
 function cellToPix(cellX, cellY) {
 	let x = cellX * cellWidth;
 	let y = cellY * cellHeight;
 	return [x, y];
-};
-
-
+}
 
 // Place all enemy objects in an array called allEnemies
 
@@ -61,14 +62,13 @@ let allEnemies = [];
 
 // this function generates enemy instances and places them to allEnemies
 function generateEnemies(track) {
-
 	let i = Math.floor(Math.random() * 3);
 	if (i === 0) {
 		allEnemies.push(new Enemy(-300, track));
-	};
+	}
 	for (j = 0; j < i; j++) {
 		allEnemies.push(new Enemy(-300, track));
-	};
+	}
 }
 
 
@@ -84,7 +84,6 @@ class Player {
 	}
 	//adjusts the player's position in the cell
 	adjustY() {
-		const diff = 20;
 		this.y -= diff;
 	}
 
@@ -100,59 +99,60 @@ class Player {
 			generateEnemies(track1);
 			generateEnemies(track2);
 			generateEnemies(track3);
-		};
+		}
 
 		// switch statement controls the player's movements
 
 		switch (this.cmd) {
-			case 'left':
-				if (this.cellX === 0) {
-					break;
-				}
-				this.cellX--;
-				break; 
-
-			case 'up':
-				if (this.cellY === 1) {
-					// if the player reaches water, enemies are cleared to be re-generated
-					allEnemies.length = 0;
-					this.cellX = initCellX;
-					this.cellY = initCellY;
-					[this.x, this.y] = cellToPix(this.cellX, this.cellY);
-					// the player is sent back to its initial position
-					this.adjustY();
-					break;
-				}
-				this.cellY--;
+		case 'left':
+			if (this.cellX === 0) {
 				break;
+			}
+			this.cellX--;
+			break; 
 
-			case 'right':
-				if (this.cellX === 4) {
-					break;
-				}
-				this.cellX++;
+		case 'up':
+			if (this.cellY === 1) {
+				// if the player reaches water, enemies are cleared to be re-generated
+				allEnemies.length = 0;
+				this.cellX = initCellX;
+				this.cellY = initCellY;
+				[this.x, this.y] = cellToPix(this.cellX, this.cellY);
+				// the player is sent back to its initial position
+				this.adjustY();
 				break;
+			}
+			this.cellY--;
+			break;
 
-			case 'down':
-				if (this.cellY === 5) {
-					break;
-				}
-				this.cellY++;
+		case 'right':
+			if (this.cellX === 4) {
 				break;
-		};
+			}
+			this.cellX++;
+			break;
+
+		case 'down':
+			if (this.cellY === 5) {
+				break;
+			}
+			this.cellY++;
+			break;
+		}
 
 		// if statement controls player-enemy collisions
-
+		// 4 is the row where the grass starts, there can be no enemies
 		if (this.cellY < 4) {
 			for (const enemy of allEnemies) {
 				[enemy.cellX, enemy.cellY] = pixToCell(enemy.x, enemy.y);
 				if (enemy.cellX === this.cellX && enemy.cellY === (this.cellY - 1)) {
-					this.cellX = 2;
-					this.cellY = 5;
+					this.cellX = initCellX;
+					this.cellY = initCellY;
 				}
 			}
 		}
 		
+		// clear the input value in order to handle the following one
 		this.cmd = null;
 	}
 
@@ -161,7 +161,7 @@ class Player {
 	}
 
 	handleInput(cmd) {
-		//the keycode is saved in another key-value pair
+		// in this method I only save the keycode value while the handling is reserved for update function
 		this.cmd = cmd;
 	}
 };
